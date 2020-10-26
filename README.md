@@ -4,7 +4,7 @@
 
 
 
-## downloadZipPackage
+## downloadZipPackage find
 
 ```
 C:\Users\Jas502n\Desktop\xampp>findstr /s /i "downloadZipPackage" *
@@ -68,7 +68,47 @@ public function downloadZipPackage($version, $link)
 ```
 利用ftp绕过正则匹配 `if(preg_match('/^https?\:\/\//', $decodeLink)) return false;`
 
+#### downloadZipPackage 
+```
+    /**
+     * Download zip package.
+     * @param $version
+     * @param $link
+     * @return bool | string
+     */
+    public function downloadZipPackage($version, $link)
+    {
+        ignore_user_abort(true);
+        set_time_limit(0);
+        if(empty($version) || empty($link)) return false;
+        $dir  = "data/client/" . $version . '/';
+        $link = helper::safe64Decode($link);
+        $file = basename($link);
+        if(!is_dir($this->app->wwwRoot . $dir))
+        {
+            mkdir($this->app->wwwRoot . $dir, 0755, true);
+        }
+        if(!is_dir($this->app->wwwRoot . $dir)) return false;
+        if(file_exists($this->app->wwwRoot . $dir . $file))
+        {
+            return commonModel::getSysURL() . $this->config->webRoot . $dir . $file;
+        }
+        ob_clean();
+        ob_end_flush();
 
+        $local  = fopen($this->app->wwwRoot . $dir . $file, 'w');
+        $remote = fopen($link, 'rb');
+        if($remote === false) return false;
+        while(!feof($remote))
+        {
+            $buffer = fread($remote, 4096);
+            fwrite($local, $buffer);
+        }
+        fclose($local);
+        fclose($remote);
+        return commonModel::getSysURL() . $this->config->webRoot . $dir . $file;
+    }
+```
 
 ## Exp
 
