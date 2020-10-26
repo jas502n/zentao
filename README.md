@@ -1,6 +1,7 @@
 # zentao Getshell
 
 ![](./12.4.2.png)
+![](./client.png)
 
 ## downloadZipPackage
 
